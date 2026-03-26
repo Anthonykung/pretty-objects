@@ -5,6 +5,10 @@
   License: Apache-2.0
 -->
 
+<center>
+  <img src="./images/icon.png" alt="Pretty Objects Logo" width="200" />
+</center>
+
 # Pretty Objects
 
 A tiny formatter and inspection tools for large structured object payloads. Pretty Objects is designed to make large or messy structured data human readable and easy to edit. It is developed by AI engineer to work on large AI datasets without going insane.

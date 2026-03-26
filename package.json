@@ -2,14 +2,39 @@
   "name": "pretty-objects",
   "displayName": "Pretty Objects",
   "description": "Object prettifier for JSON, JSONL, TS/JS objects, Python objects and more",
+  "icon": "./images/icon.png",
   "version": "0.0.1",
   "author": "Anthony Kung <hi@anth.dev> (https://anth.dev)",
+  "publisher": "Anthonykung",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anthonykung/pretty-objects"
+  },
+  "homepage": "https://github.com/Anthonykung/pretty-objects",
+  "bugs": {
+    "url": "https://github.com/Anthonykung/pretty-objects/issues"
+  },
+  "markdown": "github",
+  "qna": false,
   "engines": {
     "vscode": "^1.110.0"
   },
   "categories": [
-    "Formatters"
+    "Formatters",
+    "Other"
+  ],
+  "keywords": [
+    "json",
+    "jsonl",
+    "ndjson",
+    "formatter",
+    "pretty print",
+    "viewer",
+    "logs",
+    "python",
+    "typescript",
+    "javascript"
   ],
   "activationEvents": [
     "onCommand:pretty-objects.prettifySelection",
