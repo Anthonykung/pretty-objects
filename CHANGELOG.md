@@ -13,6 +13,12 @@ This project was originally built for my own workflow while working with large s
 
 ---
 
+## [0.0.3] - 2026-03-25
+
+### Removed
+
+- Some dev stuff clean up, nothing that would affect user experience in this update
+
 ## [0.0.2] - 2026-03-25
 
 ### Bug Fixes
