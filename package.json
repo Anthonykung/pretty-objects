@@ -3,7 +3,7 @@
   "displayName": "Pretty Objects",
   "description": "Object prettifier for JSON, JSONL, TS/JS objects, Python objects and more",
   "icon": "./images/icon.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Anthony Kung <hi@anth.dev> (https://anth.dev)",
   "publisher": "Anthonykung",
   "license": "Apache-2.0",
@@ -362,13 +362,15 @@
     "test:unit": "node --test out/test/core.test.js",
     "test:integration": "vscode-test"
   },
+  "dependencies": {
+    "typescript": "^5.9.3"
+  },
   "devDependencies": {
     "@types/vscode": "^1.110.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.56.1",
     "eslint": "^9.39.3",
-    "typescript": "^5.9.3",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2"
   }

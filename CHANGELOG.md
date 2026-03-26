@@ -13,7 +13,16 @@ This project was originally built for my own workflow while working with large s
 
 ---
 
-## [1.0.0] - 2026-03-24
+## [0.0.2] - 2026-03-25
+
+### Bug Fixes
+
+- Fixed published extension packaging so installed VSIX builds include the runtime `typescript` dependency required for JS/TS literal support.
+- Hardened startup activation so welcome setup, stale temporary tab cleanup, and initial diagnostics failures do not prevent command registration.
+- Improved startup error logging so extension-host activation failures are easier to diagnose after install.
+
+
+## [0.0.1] - 2026-03-24
 
 Initial public release.
 

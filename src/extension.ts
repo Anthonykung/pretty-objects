@@ -269,6 +269,14 @@ async function syncKeybindingContext(): Promise<void> {
 	await vscode.commands.executeCommand('setContext', CONTEXT_OBJECT_VIEWER_KEYBINDING_ENABLED, objectViewerEnabled);
 }
 
+function runStartupTask(label: string, task: () => Promise<void> | void): void {
+	void Promise.resolve()
+		.then(task)
+		.catch((error) => {
+			console.error(`[pretty-objects] Startup task failed: ${label}`, error);
+		});
+}
+
 async function setAsDefaultFormatter(extensionId: string): Promise<void> {
 	const target = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0
 		? vscode.ConfigurationTarget.Workspace
@@ -1933,17 +1941,21 @@ export function activate(context: vscode.ExtensionContext): void {
 		}),
 	);
 
-	void syncKeybindingContext();
-	void openWelcome(context, false, () => {
-		void closeAllDemoTabs();
-	});
-	void closeStaleViewerTabs();
-	void closeStaleDemoTabs();
+	runStartupTask('sync keybinding context', () => syncKeybindingContext());
+	runStartupTask('open welcome', () => openWelcome(context, false, () => {
+		runStartupTask('close demo tabs on welcome dispose', () => closeAllDemoTabs());
+	}));
+	runStartupTask('close stale viewer tabs', () => closeStaleViewerTabs());
+	runStartupTask('close stale demo tabs', () => closeStaleDemoTabs());
 	setTimeout(() => {
-		void closeStaleViewerTabs();
-		void closeStaleDemoTabs();
+		runStartupTask('close stale viewer tabs (delayed)', () => closeStaleViewerTabs());
+		runStartupTask('close stale demo tabs (delayed)', () => closeStaleDemoTabs());
 	}, 750);
-	refreshDiagnostics(diagnostics);
+	try {
+		refreshDiagnostics(diagnostics);
+	} catch (error) {
+		console.error('[pretty-objects] Initial diagnostics refresh failed.', error);
+	}
 }
 
 export function deactivate(): void {}
