@@ -1,0 +1,1331 @@
+<!--
+ * File: welcome.html
+ * Project: pretty-objects
+ * Author: Anthony Kung <hi@anth.dev> (https://anth.dev)
+ * Created for: Pretty Objects VS Code extension welcome webview
+ * License: Apache-2.0
+ *
+ * Description:
+ *   First-run onboarding page for Pretty Objects. This document is rendered
+ *   inside a VS Code webview and is also kept compatible with standard
+ *   browsers for local preview and iteration.
+ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="__CSP_CONTENT__" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pretty Objects Welcome</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --vscode-editor-background: #10131a;
+        --vscode-editor-foreground: #f4f7fb;
+        --vscode-descriptionForeground: #bac3d1;
+        --vscode-editor-font-family:
+          "Cascadia Code", "Fira Code", "SFMono-Regular", Consolas, monospace;
+        --bg: var(--vscode-editor-background);
+        --panel: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 88%,
+          white 12%
+        );
+        --panel-strong: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 82%,
+          white 18%
+        );
+        --panel-soft: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 94%,
+          transparent
+        );
+        --text: var(--vscode-editor-foreground);
+        --muted: var(--vscode-descriptionForeground);
+        --border: color-mix(
+          in srgb,
+          var(--vscode-editor-foreground) 12%,
+          transparent
+        );
+        --border-strong: color-mix(
+          in srgb,
+          var(--vscode-editor-foreground) 20%,
+          transparent
+        );
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+        --pink: #ff69b4;
+        --pink-soft: #ff8fd1;
+        --purple: #9b6dff;
+        --blue: #53a7ff;
+        --cyan: #5fe1ff;
+        --hero-gradient:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(255, 105, 180, 0.24),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 100% 0%,
+            rgba(155, 109, 255, 0.22),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(83, 167, 255, 0.18),
+            transparent 32%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(255, 105, 180, 0.1),
+            rgba(155, 109, 255, 0.08) 45%,
+            rgba(83, 167, 255, 0.1)
+          );
+        --button-gradient: linear-gradient(
+          135deg,
+          var(--pink),
+          var(--purple) 52%,
+          var(--blue)
+        );
+        --accent-gradient: linear-gradient(
+          135deg,
+          var(--pink-soft),
+          var(--purple),
+          var(--cyan)
+        );
+        --code-bg: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 84%,
+          black 16%
+        );
+        --mono: var(
+          --vscode-editor-font-family,
+          "Cascadia Code",
+          "Fira Code",
+          monospace
+        );
+        --sans: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        --hero-overlay-1: rgba(255, 255, 255, 0.06);
+        --hero-overlay-2: rgba(255, 255, 255, 0.04);
+        --hero-chip-border: rgba(255, 255, 255, 0.12);
+        --hero-chip-bg: rgba(255, 255, 255, 0.08);
+        --hero-chip-text: color-mix(in srgb, white 82%, var(--text) 18%);
+        --ghost-button-bg: rgba(255, 255, 255, 0.06);
+        --ghost-button-border: rgba(255, 255, 255, 0.12);
+        --code-card-gloss: rgba(255, 255, 255, 0.05);
+        --code-card-bg: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 88%,
+          black 12%
+        );
+        --code-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        --snippet-text: color-mix(in srgb, white 88%, var(--text) 12%);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --vscode-editor-background: #f7f8fc;
+          --vscode-editor-foreground: #111827;
+          --vscode-descriptionForeground: #5b6473;
+          --hero-overlay-1: rgba(255, 255, 255, 0.3);
+          --hero-overlay-2: rgba(255, 255, 255, 0.18);
+          --hero-chip-border: color-mix(
+            in srgb,
+            var(--vscode-editor-foreground) 14%,
+            transparent
+          );
+          --hero-chip-bg: color-mix(
+            in srgb,
+            var(--vscode-editor-background) 70%,
+            white 30%
+          );
+          --hero-chip-text: color-mix(
+            in srgb,
+            var(--text) 92%,
+            var(--muted) 8%
+          );
+          --ghost-button-bg: color-mix(
+            in srgb,
+            var(--vscode-editor-background) 78%,
+            white 22%
+          );
+          --ghost-button-border: color-mix(
+            in srgb,
+            var(--vscode-editor-foreground) 14%,
+            transparent
+          );
+          --code-card-gloss: rgba(255, 255, 255, 0.26);
+          --code-card-bg: color-mix(
+            in srgb,
+            var(--vscode-editor-background) 94%,
+            black 6%
+          );
+          --code-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          --snippet-text: color-mix(in srgb, var(--text) 94%, black 6%);
+        }
+      }
+
+      body.vscode-light {
+        --vscode-editor-background: #f7f8fc;
+        --vscode-editor-foreground: #111827;
+        --vscode-descriptionForeground: #5b6473;
+        --hero-overlay-1: rgba(255, 255, 255, 0.3);
+        --hero-overlay-2: rgba(255, 255, 255, 0.18);
+        --hero-chip-border: color-mix(
+          in srgb,
+          var(--vscode-editor-foreground) 14%,
+          transparent
+        );
+        --hero-chip-bg: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 70%,
+          white 30%
+        );
+        --hero-chip-text: color-mix(in srgb, var(--text) 92%, var(--muted) 8%);
+        --ghost-button-bg: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 78%,
+          white 22%
+        );
+        --ghost-button-border: color-mix(
+          in srgb,
+          var(--vscode-editor-foreground) 14%,
+          transparent
+        );
+        --code-card-gloss: rgba(255, 255, 255, 0.26);
+        --code-card-bg: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 94%,
+          black 6%
+        );
+        --code-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        --snippet-text: color-mix(in srgb, var(--text) 94%, black 6%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(255, 105, 180, 0.08),
+            transparent 24%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(155, 109, 255, 0.08),
+            transparent 22%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(83, 167, 255, 0.08),
+            transparent 24%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      code,
+      pre {
+        font-family: var(--mono);
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 30px 24px 64px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border-strong);
+        border-radius: 28px;
+        background: var(--hero-gradient);
+        box-shadow: var(--shadow);
+        padding: 30px;
+        backdrop-filter: blur(10px);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(120deg, var(--hero-overlay-1), transparent 30%),
+          linear-gradient(300deg, var(--hero-overlay-2), transparent 24%);
+        opacity: 0.9;
+      }
+
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--hero-chip-border);
+        background: var(--hero-chip-bg);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--hero-chip-text);
+      }
+
+      .title {
+        margin: 16px 0 12px;
+        font-size: clamp(2.5rem, 7vw, 4.8rem);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+        font-weight: 900;
+      }
+
+      .gradient-text {
+        display: inline-block;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: color-mix(in srgb, var(--text) 72%, var(--muted) 28%);
+      }
+
+      .lead strong {
+        color: var(--text);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 44px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        border: 1px solid transparent;
+        transition:
+          transform 120ms ease,
+          border-color 120ms ease,
+          opacity 120ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+        opacity: 0.96;
+      }
+
+      .button.primary {
+        background: var(--button-gradient);
+        color: white;
+        box-shadow: 0 14px 34px rgba(155, 109, 255, 0.28);
+      }
+
+      .button.secondary {
+        background: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 82%,
+          white 18%
+        );
+        border-color: var(--border-strong);
+        color: var(--text);
+      }
+
+      .button.ghost {
+        background: var(--ghost-button-bg);
+        border-color: var(--ghost-button-border);
+        color: var(--text);
+      }
+
+      .hero-note {
+        margin-top: 16px;
+        color: color-mix(in srgb, var(--text) 62%, var(--muted) 38%);
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      .code-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        border: 1px solid var(--border-strong);
+        background:
+          linear-gradient(180deg, var(--code-card-gloss), transparent 26%),
+          var(--code-card-bg);
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--code-card-shadow);
+      }
+
+      .window-bar {
+        display: flex;
+        align-items: center; /* ensures vertical centering */
+        gap: 8px;
+        padding: 14px 16px 10px;
+        border-bottom: 1px solid var(--border);
+        line-height: 1; /* removes baseline offset issues */
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block; /* prevent inline baseline behavior */
+        flex-shrink: 0;
+      }
+
+      .dot.pink {
+        background: var(--pink);
+      }
+
+      .dot.purple {
+        background: var(--purple);
+      }
+
+      .dot.blue {
+        background: var(--blue);
+      }
+
+      .window-title {
+        margin-left: 6px;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+        line-height: 1;
+        display: flex;
+        align-items: center; /* ensures perfect alignment with dots */
+      }
+
+      .snippet {
+        margin: 0;
+        padding: 18px 18px 20px;
+        white-space: pre-wrap;
+        overflow: auto;
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: var(--snippet-text);
+      }
+
+      .snippet .k {
+        color: #ff9bd3;
+      }
+
+      .snippet .f {
+        color: #83c2ff;
+      }
+
+      .snippet .s {
+        color: #caa7ff;
+      }
+
+      .snippet .c {
+        color: #8fd7ff;
+      }
+
+      .section {
+        margin-top: 24px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .card {
+        grid-column: span 4;
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 100%),
+          var(--panel-soft);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+      }
+
+      .card.wide {
+        grid-column: span 6;
+      }
+
+      .card.full {
+        grid-column: 1 / -1;
+      }
+
+      .card h2,
+      .card h3 {
+        margin: 0 0 10px;
+        line-height: 1.2;
+      }
+
+      .card h2 {
+        font-size: 1.15rem;
+      }
+
+      .card h3 {
+        font-size: 1rem;
+      }
+
+      .card p,
+      .card li {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 0.96rem;
+      }
+
+      .card ul,
+      .card ol {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
+      .card li + li {
+        margin-top: 8px;
+      }
+
+      .mini-kicker {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--pink) 14%, transparent);
+        border: 1px solid color-mix(in srgb, var(--pink) 30%, transparent);
+        color: color-mix(in srgb, var(--text) 88%, var(--pink) 12%);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .metric {
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .command-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .command {
+        padding: 14px 16px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        font-family: var(--mono);
+        font-size: 0.92rem;
+        line-height: 1.5;
+        overflow: auto;
+      }
+
+      .callout {
+        grid-column: 1 / -1;
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid color-mix(in srgb, var(--purple) 34%, transparent);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 105, 180, 0.08),
+          rgba(155, 109, 255, 0.08) 55%,
+          rgba(83, 167, 255, 0.08)
+        );
+        color: color-mix(in srgb, var(--text) 78%, var(--muted) 22%);
+      }
+
+      .callout strong {
+        color: var(--text);
+      }
+
+      .steps {
+        counter-reset: step;
+        display: grid;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .step-number {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        background: var(--button-gradient);
+        color: white;
+        box-shadow: 0 10px 24px rgba(155, 109, 255, 0.22);
+      }
+
+      .kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 28px;
+        padding: 4px 10px;
+        margin: 2px 6px 2px 0;
+        border-radius: 10px;
+        border: 1px solid var(--border-strong);
+        background: color-mix(
+          in srgb,
+          var(--vscode-editor-background) 84%,
+          white 16%
+        );
+        font-family: var(--mono);
+        font-size: 0.86rem;
+        line-height: 1;
+        color: var(--text);
+        white-space: nowrap;
+      }
+
+      .footer {
+        margin-top: 24px;
+        padding: 22px;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 100%),
+          var(--panel-soft);
+      }
+
+      .footer p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .footer p + p {
+        margin-top: 10px;
+      }
+
+      .signature {
+        display: inline-block;
+        margin-top: 6px;
+        font-weight: 800;
+        text-decoration: none;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .link-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 14px;
+        margin-top: 10px;
+      }
+
+      .inline-link {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px dashed
+          color-mix(in srgb, var(--blue) 55%, transparent);
+      }
+
+      .inline-link:hover {
+        border-bottom-style: solid;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card,
+        .card.wide {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 18px 14px 40px;
+        }
+
+        .hero {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .card,
+        .footer,
+        .code-card {
+          border-radius: 18px;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .title {
+          font-size: clamp(2.2rem, 12vw, 3.4rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Pretty Objects ✨</div>
+            <h1 class="title">
+              Make giant object payloads
+              <span class="gradient-text">actually readable.</span>
+            </h1>
+            <p class="lead">
+              A tiny formatter and inspection tools for large structured object
+              payloads. <strong>Pretty Objects</strong> is designed to make
+              large or messy structured data human readable and easy to edit. It
+              is developed by AI engineer to work on large AI datasets without
+              going insane.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="__DEMO_OBJECT_VIEWER__">
+                Run Demo
+              </a>
+              <a class="button secondary" href="__DEMO_PRETTIFY__">
+                Preview Repair Demo
+              </a>
+              <a class="button secondary" href="__DEMO_TEXT_TO_JSON__">
+                Text To JSON Demo
+              </a>
+            </div>
+            <div class="actions">
+              <a class="button primary" href="__SET_DEFAULT_FORMATTER__">
+                Set as Default Formatter
+              </a>
+              <a class="button ghost" href="__OPEN_SETTINGS__">
+                Open Settings
+              </a>
+              <a class="button ghost" href="__OPEN_KEYBOARD_SHORTCUTS__">
+                Change Keybindings
+              </a>
+            </div>
+            <p class="hero-note">
+              Built for giant datasets, JSONL training data, structured logs,
+              and "what da heck is dis crap" moments.
+            </p>
+            <p class="hero-note">
+              Reopen this page any time from the Command Palette with
+              <code>Pretty Objects: Open Welcome</code>.
+            </p>
+          </div>
+
+          <aside class="code-card" aria-label="Pretty Objects demo">
+            <div class="window-bar">
+              <span class="dot pink"></span>
+              <span class="dot purple"></span>
+              <span class="dot blue"></span>
+              <span class="window-title">pretty-objects/demo.jsonl</span>
+            </div>
+            <pre class="snippet"><span class="k">const</span> dataset = [
+  {
+    <span class="s">"id"</span>: <span class="c">Anthony</span>,
+    <span class="s">"prompt"</span>: <span class="s">"review this record"</span>,
+    <span class="s">"meta"</span>: { <span class="s">"source"</span>: <span class="s">"train"</span>, <span class="s">"tags"</span>: [<span class="s">"jsonl"</span>, <span class="s">"logs"</span>] }
+  },
+  {
+    <span class="s">"id"</span>: <span class="c">anth.dev</span>,
+    <span class="s">"nested"</span>: { <span class="s">"annoyinglyDeep"</span>: { <span class="s">"please"</span>: <span class="s">"collapse me"</span> } }
+  }
+];
+
+<span class="k">function</span> <span class="f">mood</span>() {
+  <span class="k">return</span> <span class="s">"pretty, readable, and less cursed"</span>;
+}</pre>
+          </aside>
+        </div>
+
+        <br />
+
+        <div class="callout">
+          This extension does NOT transmit any data over the network. No
+          telemetry, analytics, crash reports, usage tracking, data collection
+          of any kind is ever collected. You should NEVER trust the words of
+          some random extension, please verify the source code yourself as best
+          practices.
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid">
+          <article class="card wide">
+            <span class="mini-kicker">Why I made this</span>
+            <h2>For real dataset work, not just tiny demo JSON.</h2>
+            <p>
+              Anyone working on AI stuff knows the pain of giant JSON and JSONL
+              files that are basically impossible to read or edit without going
+              insane. Pretty Objects is designed to make those files actually
+              readable and manageable, with features that helps you tame the
+              chaos without mangling your data.
+            </p>
+
+            <div class="metrics">
+              <div class="metric">
+                <strong>JSON + JSONL</strong>
+                <span>Better readability for dataset and log workflows.</span>
+              </div>
+              <div class="metric">
+                <strong>Safe repairs</strong>
+                <span
+                  >Conservative by default so your data does not get
+                  mangled.</span
+                >
+              </div>
+              <div class="metric">
+                <strong>Folding support</strong>
+                <span
+                  >Collapse the chaos without breaking valid structure.</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <span class="mini-kicker">Start here</span>
+            <h2>Three good first moves</h2>
+            <div class="steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>
+                    Make Pretty Objects your default formatter for JSON / JSONL
+                  </h3>
+                  <p>
+                    That makes normal document formatting hit this extension
+                    instead of something else.
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>Run <code>Pretty Objects: Prettify Document</code></h3>
+                  <p>
+                    Great for object payloads that need a proper cleanup pass.
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>Try the Object Viewer</h3>
+                  <p>
+                    This is where the extension starts feeling really nice for
+                    dataset review.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div class="callout">
+            <strong>Important:</strong> VS Code does not have a clean formatter
+            pipeline for “run this alongside the other formatter too.” So if you
+            want the normal format gesture to use Pretty Objects, the reliable
+            path is to set it as your default formatter for JSON and JSONL or
+            use the Pretty Objects commands directly.
+          </div>
+
+          <article class="card wide">
+            <span class="mini-kicker">Shortcuts</span>
+            <h2>Keybindings</h2>
+            <p>
+              By default, the normal format keybinding is left alone so you can
+              choose to use Pretty Objects there or not by setting it as the
+              default formatter for JSON / JSONL. But there are also dedicated
+              shortcuts for calling Pretty Objects commands directly, which you
+              can customize in Keyboard Shortcuts.
+            </p>
+            <hr />
+
+            <div style="height: 12px"></div>
+
+            <p>
+              <span class="kbd">Shift</span>
+              <span class="kbd">Alt</span>
+              <span class="kbd">F</span>
+            </p>
+            <p>
+              Use this for JSON / JSONL when Pretty Objects is the selected
+              default formatter.
+            </p>
+
+            <div style="height: 12px"></div>
+
+            <p>
+              <span class="kbd">Ctrl</span>
+              <span class="kbd">Alt</span>
+              <span class="kbd">Z</span>
+            </p>
+            <p>
+              <span class="kbd">Cmd</span>
+              <span class="kbd">Alt</span>
+              <span class="kbd">Z</span>
+              <span style="color: var(--muted)">(macOS)</span>
+            </p>
+            <p>
+              Dedicated Pretty Objects shortcut when you want to call it
+              directly.
+            </p>
+
+            <div style="height: 12px"></div>
+
+            <p>
+              <span class="kbd">Ctrl</span>
+              <span class="kbd">Alt</span>
+              <span class="kbd">Q</span>
+            </p>
+            <p>
+              <span class="kbd">Cmd</span>
+              <span class="kbd">Alt</span>
+              <span class="kbd">Q</span>
+              <span style="color: var(--muted)">(macOS)</span>
+            </p>
+            <p>Open Object Viewer directly.</p>
+          </article>
+
+          <article class="card wide">
+            <span class="mini-kicker">Commands</span>
+            <h2>Most useful commands</h2>
+            <p>
+              Setup and low-frequency options live in
+              <code>Settings &gt; Extensions &gt; Pretty Objects</code>.
+            </p>
+            <p>
+              You can reopen this page later with
+              <code>Pretty Objects: Open Welcome</code>.
+            </p>
+            <div class="command-list">
+              <div class="command">Pretty Objects: Prettify Document</div>
+              <div class="command">Pretty Objects: Prettify Selection</div>
+              <div class="command">
+                Pretty Objects: Convert JSONL To Pretty View
+              </div>
+              <div class="command">Pretty Objects: Collapse Nested Objects</div>
+              <div class="command">Pretty Objects: Expand Nested Objects</div>
+              <div class="command">Pretty Objects: Open Object Viewer</div>
+              <div class="command">
+                Pretty Objects: Split Large File By Max Document Size
+              </div>
+              <div class="command">Pretty Objects: Restore Last Prettify</div>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <span class="mini-kicker">Setup</span>
+            <h2>Other user actions</h2>
+            <p>
+              Here are some other things and quick actions available, just click
+              on them to run the command or open the relevant settings.
+            </p>
+            <div class="steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>Formatter setup</h3>
+                  <p>
+                    Make Pretty Objects the default formatter for JSON / JSONL
+                    when you want normal format gestures to use it.
+                  </p>
+                  <p>
+                    <a href="__SET_DEFAULT_FORMATTER__"
+                      >Set Default Formatter</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>Keybindings and settings</h3>
+                  <p>
+                    Use Settings and Keyboard Shortcuts to tune shortcuts,
+                    repair mode, JSONL mode, and other extension behavior.
+                  </p>
+                  <p>
+                    <a href="__OPEN_SETTINGS__">Open Pretty Objects Settings</a>
+                  </p>
+                  <p>
+                    <a href="__OPEN_KEYBOARD_SHORTCUTS__"
+                      >Open Keyboard Shortcuts</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>Troubleshooting reset</h3>
+                  <p>
+                    Use the destructive reset action only when you need to wipe
+                    Pretty Objects state and restore defaults.
+                  </p>
+                  <p>
+                    <a href="__RESET_STATE__">Dangerously Reset All State</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <span class="mini-kicker">Heads up</span>
+            <h2>A few important notes</h2>
+            <ul>
+              <li>
+                JS / TS and Python support can work on full programs too, but
+                only by conservatively rewriting supported embedded literals.
+              </li>
+              <li>
+                Parse failures do not rewrite your content unless a bounded
+                repair succeeds.
+              </li>
+              <li>
+                Collapse / expand uses editor folding, so the underlying JSON /
+                JSONL stays valid.
+              </li>
+              <li>
+                Object Viewer uses virtual temporary editors, so saving there
+                updates the source document without creating normal files.
+              </li>
+              <li>
+                Best-effort text-to-JSON fallback only runs when repair mode is
+                set to <code>bestEffort</code>.
+              </li>
+              <li>
+                To get rid of the temporary editor tabs, you can simply reload
+                the window with <code>Developer: Reload Window</code> and they
+                shall never be seen again.
+              </li>
+            </ul>
+          </article>
+
+          <article class="card full">
+            <span class="mini-kicker">See it in action</span>
+            <h2>Run guided demos</h2>
+            <p>
+              Each demo opens sample data in a before/after diff view so you can
+              inspect the result immediately. The Object Viewer demo also opens
+              the live viewer alongside its companion diff. Demo tabs are
+              temporary and auto-close when you run another demo, close Welcome,
+              or reload the window.
+            </p>
+            <div class="steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>Prettify + repair preview</h3>
+                  <p>
+                    Opens malformed JSON and launches the preview diff so you
+                    can see conservative repair plus formatting, including
+                    trailing commas and obvious missing-comma cleanup.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_PRETTIFY__"
+                      >Run Prettify Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>JSONL pretty view</h3>
+                  <p>
+                    Opens sample NDJSON in a diff, showing the line-oriented
+                    input beside the readable review view used for dataset
+                    inspection.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_JSONL__"
+                      >Run JSONL Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>Object Viewer workflow</h3>
+                  <p>
+                    Opens a companion diff plus the live Object Viewer so you
+                    can try configurable page sizes, filters, bulk actions,
+                    warnings, per-item diff, and save-back behavior.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_OBJECT_VIEWER__"
+                      >Run Object Viewer Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">4</div>
+                <div>
+                  <h3>Collapse nested objects</h3>
+                  <p>
+                    Opens a diff for the nested payload before and after
+                    formatting, then lets you apply the folding workflow
+                    yourself on the formatted view.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_COLLAPSE__"
+                      >Run Folding Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">5</div>
+                <div>
+                  <h3>Best-effort text to JSON</h3>
+                  <p>
+                    Opens plain text plus the converted JSON result so you can
+                    inspect the fallback used by Object Viewer saves in
+                    <code>bestEffort</code> repair mode, including
+                    <code>:</code> and <code>=</code> fields, bullet lists,
+                    repeated keys, and indentation-based nesting.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_TEXT_TO_JSON__"
+                      >Run Text To JSON Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">6</div>
+                <div>
+                  <h3>TypeScript literal payloads</h3>
+                  <p>
+                    Opens a real TypeScript source file and launches a preview
+                    diff for the source file so you can see Pretty Objects
+                    rewrite supported embedded literals inside normal program
+                    code too.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_LITERAL_PAYLOADS__"
+                      >Run TypeScript Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">7</div>
+                <div>
+                  <h3>Python literal payloads</h3>
+                  <p>
+                    Opens a real Python source file and launches a preview diff
+                    so you can see supported dict and list literals get cleaned
+                    up inside normal program code.
+                  </p>
+                  <p>
+                    <a class="button secondary" href="__DEMO_PYTHON_PAYLOADS__"
+                      >Run Python Demo</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card full">
+            <span class="mini-kicker">About the creator</span>
+            <h2>Built by someone who actually works with giant datasets.</h2>
+
+            <p>
+              Ello! I'm Anthony Kung, a PhD student at Oregon State University
+              working on AI hardware acceleration. I built Pretty Objects
+              because all the massive AI training datasets and structured logs
+              are such a pain to read and there's nothing that makes it the way
+              I wanted so I made it myself :P
+            </p>
+
+            <br />
+
+            <p>
+              Pretty Objects started as a tool to make
+              <strong>my own dataset workflow less painful</strong>. If it makes
+              your object payloads easier to read too, then yay :3
+            </p>
+
+            <br />
+
+            <p>
+              Oh and if you haven't noticed, I'm a little crazy 🤪 this
+              extension is created to indulge in my craziness, it may not always
+              be the most sensible choice for everyone.
+            </p>
+
+            <br />
+
+            <p>
+              I've yapped too much already, if you want to see more of my
+              shenanigans or get in touch, here's where you can find me:
+            </p>
+
+            <div style="margin-top: 12px">
+              <a class="button ghost" href="https://anth.dev">
+                Read more about me
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="footer">
+        <p>
+          Pretty Objects is open source and licensed under
+          <a
+            class="inline-link"
+            href="https://www.apache.org/licenses/LICENSE-2.0"
+            >Apache-2.0</a
+          >.
+        </p>
+        <p>
+          If something is broken, weird, or you want a feature, please open an
+          issue on GitHub.
+        </p>
+        <div class="link-list">
+          <a class="inline-link" href="https://anth.dev/terms"
+            >Terms of Service</a
+          >
+          <a class="inline-link" href="https://anth.dev/privacy"
+            >Privacy Policy</a
+          >
+        </div>
+        <br />
+        <p>
+          This extension does NOT transmit any data over the network. No
+          telemetry, analytics, crash reports, usage tracking, data collection
+          of any kind is ever collected. You should NEVER trust the words of
+          some random extension, please verify the source code yourself as best
+          practices.
+        </p>
+        <p>
+          <a class="signature" href="https://anth.dev"
+            >Created with 💖 by Anthony Kung</a
+          >
+        </p>
+      </section>
+    </div>
+    <script>
+      /*
+       * File: welcome.html
+       * Section: welcome console banner
+       * Purpose:
+       *   Emit a small debug banner when the onboarding page loads.
+       * Compatibility:
+       *   Uses globalThis.console so the call is safe in both VS Code webviews
+       *   and standard browsers without depending on extension-only APIs.
+       */
+      globalThis.console?.log(
+        [
+          "██████╗ ██████╗ ███████╗████████╗████████╗██╗   ██╗       ",
+          "██╔══██╗██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝╚██╗ ██╔╝       ",
+          "██████╔╝██████╔╝█████╗     ██║      ██║    ╚████╔╝        ",
+          "██╔═══╝ ██╔══██╗██╔══╝     ██║      ██║     ╚██╔╝         ",
+          "██║     ██║  ██║███████╗   ██║      ██║      ██║          ",
+          "╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝      ╚═╝          ",
+          "",
+          "",
+          " ██████╗ ██████╗      ██╗███████╗ ██████╗████████╗███████╗",
+          "██╔═══██╗██╔══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝",
+          "██║   ██║██████╔╝     ██║█████╗  ██║        ██║   ███████╗",
+          "██║   ██║██╔══██╗██   ██║██╔══╝  ██║        ██║   ╚════██║",
+          "╚██████╔╝██████╔╝╚█████╔╝███████╗╚██████╗   ██║   ███████║",
+          " ╚═════╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝",
+          "",
+          "Pretty Objects Welcome",
+          "Author  : Anthony Kung (anth.dev)",
+          "License : Apache-2.0",
+          "Runtime : VS Code",
+          "Status  : welcome page loaded",
+        ].join("\n"),
+      );
+    </script>
+  </body>
+</html>

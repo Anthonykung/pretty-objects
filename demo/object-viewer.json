@@ -1,0 +1,106 @@
+[
+  {
+    "id": "row-001",
+    "task": "classification",
+    "input": "Refund still not showing up in my account.",
+    "target": {
+      "intent": "billing_issue",
+      "urgency": "medium"
+    },
+    "metadata": {
+      "source": "customer-intent-v1",
+      "qualityScore": 0.96
+    }
+  },
+  {
+    "id": "row-002",
+    "task": "classification",
+    "input": "Refund still not showing up in my account.",
+    "target": {
+      "intent": "billing_issue",
+      "urgency": "medium"
+    },
+    "metadata": {
+      "source": "customer-intent-v1",
+      "qualityScore": 0.96
+    }
+  },
+  {},
+  {
+    "id": "row-004",
+    "task": "summarization",
+    "document": {
+      "title": "Cache rollout issue",
+      "content": "A cache rollout introduced a behavior that forced template recompilation on every request."
+    },
+    "summary": "A cache rollout caused repeated template recompilation and increased latency.",
+    "metadata": {
+      "source": "incident-reports-v3",
+      "qualityScore": 0.93
+    }
+  },
+  {
+    "id": "row-005",
+    "task": "summarization",
+    "document": "A cache rollout introduced a behavior that forced template recompilation on every request.",
+    "summary": "A cache rollout caused repeated template recompilation and increased latency.",
+    "metadata": {
+      "source": "incident-reports-v3",
+      "qualityScore": 0.91
+    }
+  },
+  {
+    "id": "row-006",
+    "task": "tool-call-routing",
+    "input": "Find failed runs from today mentioning token overflow.",
+    "target": {
+      "tool": "run_search",
+      "arguments": {
+        "status": "failed",
+        "date": "today",
+        "query": "token overflow"
+      }
+    },
+    "metadata": {
+      "source": "assistant-routing-v4",
+      "qualityScore": 0.97
+    }
+  },
+  {
+    "id": "row-007",
+    "task": "tool-call-routing",
+    "input": "Find failed runs from today mentioning token overflow.",
+    "target": {
+      "tool": "run_search",
+      "arguments": {
+        "status": "failed",
+        "date": "today",
+        "query": "token overflow"
+      }
+    },
+    "metadata": {
+      "source": "assistant-routing-v4",
+      "qualityScore": 0.97
+    }
+  },
+  {
+    "id": "row-008",
+    "task": "classification",
+    "input": "I need to update the invoice address before payment goes through.",
+    "target": {
+      "intent": "account_update",
+      "urgency": "low"
+    }
+  },
+  {
+    "id": "row-009",
+    "task": "classification",
+    "input": "I need to update the invoice address before payment goes through.",
+    "target": [],
+    "metadata": {
+      "source": "customer-intent-v1",
+      "qualityScore": 0.41
+    }
+  },
+  {}
+]

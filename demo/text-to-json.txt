@@ -1,0 +1,109 @@
+Foundation Mix Dataset Intake
+Example intake document for a training dataset and pipeline status snapshot.
+
+This intake document is used to preview text-to-JSON conversion.
+It contains free-form notes before structured fields.
+The parser should treat the first non-empty line as the title.
+The second non-empty line should become the summary.
+Later free-form lines should become note1, note2, and so on.
+
+Name: Foundation Mix v7
+Owner: ML Platform
+Status: active
+Archived: no
+Ready For Training: yes
+Retry Count: 3
+Temperature: 12.5
+Delta: -5
+Shadow Price: $30
+Monthly Budget: 1,200
+Published Cost: $1,200.50
+Deprecated At: null
+support = ingestion-team
+
+Payment Information:
+  Billing Model: usage-based
+  Currency: USD
+  Auto Renew: yes
+  Base Cost: $1,200.50
+  Discount: 30
+  Credits Remaining: 12.5
+  Failed Charges: 0
+  Notes:
+    Primary billing is attached to the platform cost center.
+    Overage charges are reviewed every Friday.
+    Finance wants anomalies flagged before publication.
+
+Location:
+  Building 5
+  Room 201
+  Corvallis, Oregon
+  Access through the west entrance.
+
+Contacts:
+  Primary: Alex
+  Primary: Jordan
+  Secondary: Taylor
+  Secondary: Morgan
+
+Tags:
+  - training
+  - dataset
+  - jsonl
+  - preprocessing
+  - evaluation
+
+Shards:
+  - train-00001
+  - train-00002
+  - train-00003
+
+Metrics:
+  Records: 18234567
+  Validation Records: 102400
+  Test Records: 20480
+  Error Rate: 0.02
+  Enabled: yes
+  Escalation Thresholds:
+    Warning: 30
+    Critical: $1,200.50
+
+Normalization:
+  Trim Whitespace: yes
+  Drop Empty Fields: no
+  Null Token: null
+  Number Parsing: yes
+  Currency Parsing: yes
+  Comma Numbers: yes
+  Rules:
+    - lowercase header names
+    - preserve original text blocks
+    - merge repeated keys into arrays
+
+Repeated Notes:
+  Note: remove duplicate rows before training
+  Note: preserve evaluation samples
+  Note: publish shard manifest after validation
+
+Examples:
+  Good Sample:
+    Input: User asks how to reduce GPU memory fragmentation during training.
+    Label: optimization
+    Score: 0.98
+  Bad Sample:
+    Input: 
+      this row was partially truncated during export
+      and should be inspected manually
+    Label: null
+    Score: -5
+
+Deployment:
+  Region: us-west
+  Region: us-central
+  Active: yes
+  Rollout:
+    Stage: canary
+    Percent: 30
+    Notes:
+      Start with internal traffic only.
+      Expand after latency remains stable for 24 hours.

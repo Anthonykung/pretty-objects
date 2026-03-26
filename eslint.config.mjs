@@ -1,3 +1,10 @@
+/*
+ * File: eslint.config.mjs
+ * Project: pretty-objects
+ * Author: Anthony Kung <hi@anth.dev> (https://anth.dev)
+ * License: Apache-2.0
+ */
+
 import typescriptEslint from "typescript-eslint";
 
 export default [{

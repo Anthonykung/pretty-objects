@@ -3,19 +3,327 @@
   "displayName": "Pretty Objects",
   "description": "Object prettifier for JSON, JSONL, TS/JS objects, Python objects and more",
   "version": "0.0.1",
+  "author": "Anthony Kung <hi@anth.dev> (https://anth.dev)",
+  "license": "Apache-2.0",
   "engines": {
     "vscode": "^1.110.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:pretty-objects.prettifySelection",
+    "onCommand:pretty-objects.prettifyDocument",
+    "onCommand:pretty-objects.prettifyWithPreview",
+    "onCommand:pretty-objects.restoreLastPrettify",
+    "onCommand:pretty-objects.convertJsonlToPrettyView",
+    "onCommand:pretty-objects.collapseNestedObjects",
+    "onCommand:pretty-objects.expandNestedObjects",
+    "onCommand:pretty-objects.toggleKeybinding",
+    "onCommand:pretty-objects.setAsDefaultFormatterForJson",
+    "onCommand:pretty-objects.openWelcome",
+    "onCommand:pretty-objects.openObjectViewer",
+    "onCommand:pretty-objects.splitLargeFileByMaxDocumentSize",
+    "onCommand:pretty-objects.dangerouslyResetAllState",
+    "onCommand:pretty-objects.demoPrettifyAndRepair",
+    "onCommand:pretty-objects.demoJsonlPrettyView",
+    "onCommand:pretty-objects.demoObjectViewer",
+    "onCommand:pretty-objects.demoCollapseNestedObjects",
+    "onCommand:pretty-objects.demoTextToJson",
+    "onCommand:pretty-objects.demoLiteralPayloads",
+    "onCommand:pretty-objects.demoPythonPayloads",
+    "onStartupFinished",
+    "onLanguage:json",
+    "onLanguage:jsonc",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:python"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "jsonl",
+        "aliases": [
+          "JSONL",
+          "jsonl"
+        ],
+        "extensions": [
+          ".jsonl",
+          ".ndjson"
+        ]
+      }
+    ],
     "commands": [
       {
-        "command": "pretty-objects.helloWorld",
-        "title": "Hello World"
+        "command": "pretty-objects.prettifySelection",
+        "title": "Pretty Objects: Prettify Selection"
+      },
+      {
+        "command": "pretty-objects.prettifyDocument",
+        "title": "Pretty Objects: Prettify Document"
+      },
+      {
+        "command": "pretty-objects.prettifyWithPreview",
+        "title": "Pretty Objects: Prettify With Preview"
+      },
+      {
+        "command": "pretty-objects.restoreLastPrettify",
+        "title": "Pretty Objects: Restore Last Prettify"
+      },
+      {
+        "command": "pretty-objects.convertJsonlToPrettyView",
+        "title": "Pretty Objects: Convert JSONL To Pretty View"
+      },
+      {
+        "command": "pretty-objects.collapseNestedObjects",
+        "title": "Pretty Objects: Collapse Nested Objects"
+      },
+      {
+        "command": "pretty-objects.expandNestedObjects",
+        "title": "Pretty Objects: Expand Nested Objects"
+      },
+      {
+        "command": "pretty-objects.toggleKeybinding",
+        "title": "Pretty Objects: Toggle Keybinding"
+      },
+      {
+        "command": "pretty-objects.setAsDefaultFormatterForJson",
+        "title": "Pretty Objects: Set As Default Formatter For JSON And JSONL"
+      },
+      {
+        "command": "pretty-objects.openWelcome",
+        "title": "Pretty Objects: Open Welcome"
+      },
+      {
+        "command": "pretty-objects.openObjectViewer",
+        "title": "Pretty Objects: Open Object Viewer"
+      },
+      {
+        "command": "pretty-objects.splitLargeFileByMaxDocumentSize",
+        "title": "Pretty Objects: Split Large File By Max Document Size"
+      },
+      {
+        "command": "pretty-objects.dangerouslyResetAllState",
+        "title": "Pretty Objects: Dangerously Reset All State"
+      },
+      {
+        "command": "pretty-objects.demoPrettifyAndRepair",
+        "title": "Pretty Objects: Demo Prettify And Repair"
+      },
+      {
+        "command": "pretty-objects.demoJsonlPrettyView",
+        "title": "Pretty Objects: Demo JSONL Pretty View"
+      },
+      {
+        "command": "pretty-objects.demoObjectViewer",
+        "title": "Pretty Objects: Demo Object Viewer"
+      },
+      {
+        "command": "pretty-objects.demoCollapseNestedObjects",
+        "title": "Pretty Objects: Demo Collapse Nested Objects"
+      },
+      {
+        "command": "pretty-objects.demoTextToJson",
+        "title": "Pretty Objects: Demo Text To JSON"
+      },
+      {
+        "command": "pretty-objects.demoLiteralPayloads",
+        "title": "Pretty Objects: Demo TypeScript Literal Payloads"
+      },
+      {
+        "command": "pretty-objects.demoPythonPayloads",
+        "title": "Pretty Objects: Demo Python Literal Payloads"
+      }
+    ],
+    "configuration": {
+      "title": "Pretty Objects",
+      "properties": {
+        "prettyObjects.repairMode": {
+          "type": "string",
+          "enum": [
+            "deterministic",
+            "moderate",
+            "bestEffort"
+          ],
+          "default": "deterministic",
+          "description": "How aggressively Pretty Objects attempts safe repairs before formatting."
+        },
+        "prettyObjects.previewBeforeApply": {
+          "type": "boolean",
+          "default": false,
+          "description": "Open a diff preview before applying command-based prettify operations."
+        },
+        "prettyObjects.jsonlMode": {
+          "type": "string",
+          "enum": [
+            "linePreserving",
+            "prettyView"
+          ],
+          "default": "linePreserving",
+          "description": "Default JSONL formatting mode."
+        },
+        "prettyObjects.quoteStyle.jsTs": {
+          "type": "string",
+          "enum": [
+            "single",
+            "double"
+          ],
+          "default": "single",
+          "description": "Quote style used when re-emitting JavaScript and TypeScript strings."
+        },
+        "prettyObjects.quoteStyle.python": {
+          "type": "string",
+          "enum": [
+            "single",
+            "double"
+          ],
+          "default": "single",
+          "description": "Quote style used when re-emitting Python strings."
+        },
+        "prettyObjects.maxDocumentSize": {
+          "type": "number",
+          "default": 1000000,
+          "minimum": 1024,
+          "description": "Maximum selection or document size in bytes that Pretty Objects will attempt to format."
+        },
+        "prettyObjects.collapseNestedFieldsByDefault": {
+          "type": "boolean",
+          "default": true,
+          "description": "Collapse nested object and array fields after document-level pretty view commands."
+        },
+        "prettyObjects.enableKeybinding": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the Pretty Objects document-format keybinding for JSON and JSONL."
+        },
+        "prettyObjects.enableObjectViewerKeybinding": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the Pretty Objects Object Viewer keybinding."
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "pretty-objects.prettifySelection",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "pretty-objects.prettifyWithPreview",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "pretty-objects.collapseNestedObjects",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "pretty-objects.expandNestedObjects",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "pretty-objects.openObjectViewer",
+          "when": "editorTextFocus"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "pretty-objects.prettifySelection"
+        },
+        {
+          "command": "pretty-objects.prettifyDocument"
+        },
+        {
+          "command": "pretty-objects.prettifyWithPreview"
+        },
+        {
+          "command": "pretty-objects.restoreLastPrettify"
+        },
+        {
+          "command": "pretty-objects.convertJsonlToPrettyView"
+        },
+        {
+          "command": "pretty-objects.collapseNestedObjects"
+        },
+        {
+          "command": "pretty-objects.expandNestedObjects"
+        },
+        {
+          "command": "pretty-objects.toggleKeybinding",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.setAsDefaultFormatterForJson",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.openWelcome",
+          "when": "true"
+        },
+        {
+          "command": "pretty-objects.openObjectViewer"
+        },
+        {
+          "command": "pretty-objects.dangerouslyResetAllState",
+          "when": "true"
+        },
+        {
+          "command": "pretty-objects.demoPrettifyAndRepair",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoJsonlPrettyView",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoObjectViewer",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoCollapseNestedObjects",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoTextToJson",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoLiteralPayloads",
+          "when": "false"
+        },
+        {
+          "command": "pretty-objects.demoPythonPayloads",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "pretty-objects.prettifySelection",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p",
+        "when": "editorTextFocus && editorHasSelection"
+      },
+      {
+        "command": "pretty-objects.prettifyDocument",
+        "key": "shift+alt+f",
+        "mac": "shift+alt+f",
+        "when": "editorTextFocus && prettyObjects.keybindingEnabled && (editorLangId == json || editorLangId == jsonl)"
+      },
+      {
+        "command": "pretty-objects.prettifyDocument",
+        "key": "ctrl+alt+z",
+        "mac": "cmd+alt+z",
+        "when": "editorTextFocus && prettyObjects.keybindingEnabled"
+      },
+      {
+        "command": "pretty-objects.openObjectViewer",
+        "key": "ctrl+alt+q",
+        "mac": "cmd+alt+q",
+        "when": "editorTextFocus && prettyObjects.objectViewerKeybindingEnabled"
       }
     ]
   },
@@ -25,7 +333,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "npm run test:unit",
+    "test:unit": "node --test out/test/core.test.js",
+    "test:integration": "vscode-test"
   },
   "devDependencies": {
     "@types/vscode": "^1.110.0",

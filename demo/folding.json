@@ -1,0 +1,215 @@
+{
+  "name": "foundation-mix-v7",
+  "description": "Multi-task assistant training mixture for instruction following, classification, extraction, summarization, and tool routing.",
+  "version": "2026.03.25",
+  "owner": {
+    "team": "ml-platform",
+    "environment": "staging",
+    "storage": {
+      "provider": "s3-compatible",
+      "bucket": "ml-datasets",
+      "prefix": "foundation-mix-v7/"
+    }
+  },
+  "splits": {
+    "train": {
+      "records": 18234567,
+      "shards": 256,
+      "estimatedTokens": 9482231142
+    },
+    "validation": {
+      "records": 102400,
+      "shards": 8,
+      "estimatedTokens": 58231119
+    },
+    "test": {
+      "records": 20480,
+      "shards": 4,
+      "estimatedTokens": 11041282
+    }
+  },
+  "taskMix": [
+    {
+      "task": "instruction-following",
+      "weight": 0.42,
+      "sources": [
+        "synthetic-support-v2",
+        "synthetic-coding-v1",
+        "chat-rewrite-v4"
+      ]
+    },
+    {
+      "task": "classification",
+      "weight": 0.16,
+      "sources": [
+        "customer-intent-v1",
+        "moderation-benchmark-v2",
+        "risk-routing-v3"
+      ]
+    },
+    {
+      "task": "summarization",
+      "weight": 0.14,
+      "sources": [
+        "incident-reports-v3",
+        "meeting-notes-v2",
+        "longform-articles-v1"
+      ]
+    },
+    {
+      "task": "tool-call-routing",
+      "weight": 0.12,
+      "sources": [
+        "assistant-routing-v4",
+        "ops-actions-v2"
+      ]
+    },
+    {
+      "task": "extraction",
+      "weight": 0.08,
+      "sources": [
+        "receipt-parsing-v2",
+        "invoice-entities-v1",
+        "ticket-fields-v3"
+      ]
+    },
+    {
+      "task": "retrieval-reranking",
+      "weight": 0.08,
+      "sources": [
+        "retrieval-benchmark-v5"
+      ]
+    }
+  ],
+  "filtering": {
+    "language": {
+      "allowed": [
+        "en",
+        "es",
+        "fr",
+        "de"
+      ],
+      "fallbackBehavior": "drop-unknown"
+    },
+    "quality": {
+      "minimumScore": 0.82,
+      "maxToxicityScore": 0.08,
+      "maxPromptTokens": 8192,
+      "maxCompletionTokens": 4096
+    },
+    "deduplication": {
+      "enabled": true,
+      "strategy": {
+        "exact": true,
+        "normalized": true,
+        "semantic": {
+          "enabled": true,
+          "embeddingModel": "text-embed-large-v2",
+          "threshold": 0.985
+        }
+      },
+      "keepPolicy": "highest-quality"
+    }
+  },
+  "augmentation": {
+    "paraphrase": {
+      "enabled": true,
+      "probability": 0.22
+    },
+    "backtranslation": {
+      "enabled": true,
+      "probability": 0.07,
+      "languages": [
+        "fr",
+        "de"
+      ]
+    },
+    "noiseInjection": {
+      "enabled": true,
+      "probability": 0.03,
+      "types": [
+        "typos",
+        "punctuation",
+        "casing"
+      ]
+    }
+  },
+  "schema": {
+    "recordTypes": [
+      "chat-sample",
+      "classification-sample",
+      "summarization-sample",
+      "tool-routing-sample",
+      "extraction-sample",
+      "reranking-sample"
+    ],
+    "requiredFields": {
+      "global": [
+        "id",
+        "split",
+        "task",
+        "source",
+        "language",
+        "metadata"
+      ],
+      "chatSample": [
+        "messages"
+      ],
+      "classificationSample": [
+        "input",
+        "target"
+      ],
+      "summarizationSample": [
+        "document",
+        "summary"
+      ]
+    }
+  },
+  "pipeline": {
+    "stages": [
+      {
+        "name": "ingest",
+        "status": "completed",
+        "artifacts": {
+          "rawManifest": "manifests/raw/2026-03-25.json",
+          "sourceStats": "reports/source-stats/2026-03-25.json"
+        }
+      },
+      {
+        "name": "normalize",
+        "status": "completed",
+        "artifacts": {
+          "normalizedManifest": "manifests/normalized/2026-03-25.json"
+        }
+      },
+      {
+        "name": "deduplicate",
+        "status": "completed",
+        "artifacts": {
+          "dedupReport": "reports/dedup/2026-03-25.json",
+          "removedSamples": "reports/dedup/removed-samples.jsonl"
+        }
+      },
+      {
+        "name": "quality-filter",
+        "status": "completed",
+        "artifacts": {
+          "filterReport": "reports/filter/2026-03-25.json"
+        }
+      },
+      {
+        "name": "shard-and-publish",
+        "status": "running",
+        "artifacts": {
+          "publishedShards": "s3://ml-datasets/foundation-mix-v7/train/"
+        }
+      }
+    ],
+    "runtime": {
+      "cluster": "gpu-prep-west",
+      "workers": 48,
+      "avgShardWriteSeconds": 31.8,
+      "estimatedRemainingMinutes": 14
+    }
+  }
+}

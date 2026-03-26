@@ -1,0 +1,38 @@
+{
+  "dataset": "foundation-mix-v7",
+  "split": "train",
+  "records": [
+    {
+      "id": "sample-000101",
+      "task": "classification",
+      "input": "I was charged twice for the same order.",
+      "target": {
+        "intent": "billing_issue",
+        "urgency": "high",
+      }
+    },
+    {
+      "id": "sample-000102",
+      "task": "summarization",
+      "document": {
+        "title": "Latency spike",
+        "content": "P95 latency increased sharply after a bad cache invalidation."
+      },
+      "summary": "Latency increased because cache invalidation triggered repeated recompilation."
+    }
+    {
+      "id": "sample-000103",
+      "task": "tool-call-routing",
+      "input": "Show failed jobs from yesterday mentioning schema mismatch.",
+      "target": {
+        "tool": "job_search",
+        "arguments": {
+          "status": "failed",
+          "dateRange": "yesterday",
+          "query": "schema mismatch"
+        }
+      },
+    },
+  ],
+  "notes": "this file is intentionally a little cursed for repair preview"
+}
